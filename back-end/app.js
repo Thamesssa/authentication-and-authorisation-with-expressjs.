@@ -1,6 +1,6 @@
 "use strict";
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie parser");
+const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
@@ -19,7 +19,7 @@ app.use(cors(corsOption));
 
 app.use(cookieParser(process.env.TOKEN_KEY));
 
-var jsonParser = bodyParser.jason();
+var jsonParser = bodyParser.json();
 app.use(
     bodyParser.urlencoded({
       extended: true,  
