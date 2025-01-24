@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT | 4001;
+const PORT = process.env.PORT || 4001;
 app.use(morgan("tiny"));
 
 const corsOption = {
@@ -22,33 +22,32 @@ app.use(cookieParser(process.env.TOKEN_KEY));
 var jsonParser = bodyParser.json();
 app.use(
     bodyParser.urlencoded({
-      extended: true,  
+        extended: true,
     })
 );
 app.use(bodyParser.json());
 
-app.use(function (req, res, next){
+app.use(function (req, res, next) {
     res.header(
-        "Access-Control-Allow-Method",
+        "Access-Control-Allow-Methods",
         "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-
     );
     res.header(
         "Access-Control-Allow-Headers",
-        "X-Requested-With,content-type, Content-Type, Authorisation, Authentication, Content-Length, X-Requested-With, Accept, x-access-token, credentials, Origin, X-Content-Type-Options"
+        "X-Requested-With,content-type, Content-Type, Authorization, Authentication, Content-Length, X-Requested-With, Accept, x-access-token, credentials, Origin, X-Content-Type-Options"
     );
     res.header(
         "Access-Control-Expose-Headers",
-        "x-access-token, Authorisation, Authentication, withCredentials, credentials, Set-Cookie"
+        "x-access-token, Authorization, Authentication, withCredentials, credentials, Set-Cookie"
     );
-    res.header("Access-Control-Allow-Credentials, true");
+    res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
 
-//app routes
-app.use("./auth", require("./routes/authHandling"));
-app.use("./admin", require("./routes/adminHandling"));
+// app routes
+app.use("/auth", require("./routes/authHandling"));
+app.use("/admin", require("./routes/adminHandling"));
 
-var server = app.listen(PORT, () =>{
-    console.info(`Sever Listening on Port ${PORT}`)
+var server = app.listen(PORT, () => {
+    console.info(`Server Listening on Port ${PORT}`);
 });
